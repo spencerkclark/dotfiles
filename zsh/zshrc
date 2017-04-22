@@ -1,0 +1,16 @@
+# Set any machine-specific settings in a ~/.zshrc_local file
+if [[ -a ~/.zshrc_local ]]
+then
+    source ~/.zshrc_local
+fi
+
+export ZSH=~/.oh-my-zsh
+
+ZSH_THEME="spencerkclark"
+
+plugins=(git-prompt osx)
+
+# Would you like to use another custom folder than $ZSH/custom?
+ZSH_CUSTOM=~/.zsh-custom
+
+source $ZSH/oh-my-zsh.sh
