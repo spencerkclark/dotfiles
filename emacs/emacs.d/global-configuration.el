@@ -18,23 +18,24 @@
 
 ;; List the packages we want to install
 (let* ((packages
-	'(anaconda-mode      ; Alternative Python major mode
-	  auto-complete      ; Auto-completions based on buffer contents
-	  better-defaults    ; Aesthetics and other tweaks
-	  bind-key           ; Alias for more efficiently binding custom keys
-	  color-theme        ; Color/theme chooser
-      flycheck           ; On the fly syntax checking
-	  idle-require       ; Delayed package loading
-	  leuven-theme       ; Nice light white/blue theme
-	  magit              ; Tools for controlling git from Emacs
-	  markdown-mode      ; Major mode for editing Markdown files
-	  material-theme     ; Mixed theme from Google Material
-	  moe-theme          ; Dark theme
-	  monokai-theme      ; Classic slate/dark theme
-	  org                ; Outline-based notes and task manager
-	  org-ref            ; Integrated reference manager for Org mode
-	  use-package))      ; Alias for loading packages
-             (packages (remove-if 'package-installed-p packages)))
+        '(anaconda-mode      ; Alternative Python major mode
+          auctex             ; Improved LaTeX mode
+          auto-complete      ; Auto-completions based on buffer contents
+          better-defaults    ; Aesthetics and other tweaks
+          bind-key           ; Alias for more efficiently binding custom keys
+          color-theme        ; Color/theme chooser
+          flycheck           ; On the fly syntax checking
+          idle-require       ; Delayed package loading
+          leuven-theme       ; Nice light white/blue theme
+          magit              ; Tools for controlling git from Emacs
+          markdown-mode      ; Major mode for editing Markdown files
+          material-theme     ; Mixed theme from Google Material
+          moe-theme          ; Dark theme
+          monokai-theme      ; Classic slate/dark theme
+          org                ; Outline-based notes and task manager
+          org-ref            ; Integrated reference manager for Org mode
+          use-package))      ; Alias for loading packages
+       (packages (remove-if 'package-installed-p packages)))
 
   (when packages
     (ignore-errors (unless package-archive-contents (package-refresh-contents))
