@@ -34,7 +34,8 @@
           monokai-theme      ; Classic slate/dark theme
           org                ; Outline-based notes and task manager
           org-ref            ; Integrated reference manager for Org mode
-          use-package))      ; Alias for loading packages
+          use-package        ; Alias for loading packages
+          ))      
        (packages (remove-if 'package-installed-p packages)))
 
   (when packages

@@ -50,3 +50,13 @@
         ("WAITING" :foreground "gold" :weight bold)
         ("HOLD" :foreground "red" :weight bold)
         ("SHELF" :foreground "purple" :weight bold)))
+
+;; Minted for syntax highlighting
+(setq org-latex-listings 'minted
+      org-latex-packages-alist '(("" "minted"))
+      org-latex-pdf-process
+            '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+              "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+
+(setq org-latex-pdf-process '("pdflatex %f" "bibtex %b" "pdflatex %f"
+                              "pdflatex %f"))

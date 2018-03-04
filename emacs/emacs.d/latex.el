@@ -25,6 +25,10 @@
 ;; LaTeX-math-mode http://www.gnu.org/s/auctex/manual/auctex/Mathematics.html
 (add-hook 'TeX-mode-hook 'LaTeX-math-mode)
 
+;; Automatic brace pairing
+(setq LaTeX-electric-left-right-brace t)
+(setq TeX-electric-math t)
+
 ;;; RefTeX
 ;; Turn on RefTeX for AUCTeX http://www.gnu.org/s/auctex/manual/reftex/reftex_5.html
 (add-hook 'TeX-mode-hook 'turn-on-reftex)
@@ -38,7 +42,6 @@
      ;; can't use $HOME in path for \addbibresource but that "~"
      ;; works.
      (setq reftex-bibliography-commands '("bibliography" "nobibliography" "addbibresource"))
-                                        ;     (setq reftex-default-bibliography '("UNCOMMENT LINE AND INSERT PATH TO YOUR BIBLIOGRAPHY HERE")); So that RefTeX in Org-mode knows bibliography
      (setcdr (assoc 'caption reftex-default-context-regexps) "\\\\\\(rot\\|sub\\)?caption\\*?[[{]"); Recognize \subcaptions, e.g. reftex-citation
      (setq reftex-cite-format; Get ReTeX with biblatex, see https://tex.stackexchange.com/questions/31966/setting-up-reftex-with-biblatex-citation-commands/31992#31992
            '((?t . "\\textcite[]{%l}")
