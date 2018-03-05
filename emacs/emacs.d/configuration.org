@@ -109,6 +109,10 @@ https://stackoverflow.com/questions/729692/why-should-text-files-end-with-a-newl
     (require 'which-key)
     (which-key-mode)
 #+END_SRC
+** Make flycheck errors more visible
+#+BEGIN_SRC emacs-lisp
+    (setq flycheck-highlighting-mode 'lines)
+#+END_SRC
 * Python settings
 ** Syntax and style checking
 Turn on Python-related syntax and style checking.
@@ -227,4 +231,9 @@ https://orgmode.org/manual/Agenda-files.html
           -output-directory %o %f"
                   "pdflatex -shell-escape -interaction nonstopmode
           -output-directory %o %f"))
+#+END_SRC
+* Fortran settings
+** Enable flycheck in f90-mode
+#+BEGIN_SRC emacs-lisp
+    (add-hook 'f90-mode-hook 'flycheck-mode)
 #+END_SRC

@@ -11,7 +11,7 @@ on
 - My global `emacs` and `org-mode` settings are based substantially
  on
  [Daniel Rothenberg's](https://github.com/darothen/dotfiles/tree/master/emacs).
-- My `emacs` configuration file setup is based on [Harry Schwartz's](https://github.com/hrs/dotfiles/blob/master/emacs/.emacs.d/configuration.org)
+- My `emacs` configuration file setup is based on [Harry Schwartz's](https://github.com/hrs/dotfiles/blob/master/emacs/.emacs.d/configuration.org).
 
 Installation
 ------------
