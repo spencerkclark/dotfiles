@@ -14,3 +14,6 @@ plugins=(git-prompt osx)
 ZSH_CUSTOM=~/.zsh-custom
 
 source $ZSH/oh-my-zsh.sh
+
+# Add .cask directory to PATH
+export PATH="$HOME/.cask/bin:$PATH"

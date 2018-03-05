@@ -1,0 +1,230 @@
+#+TITLE: Emacs configuration
+#+AUTHOR: Spencer K. Clark
+#+OPTIONS: toc:nil num:nil
+
+Here I am using org-mode to organize my configuration file for emacs [[https://www.youtube.com/watch?v%3DSzA2YODtgK4][as shown
+by Harry Schwartz.]]  This allows for easy documentation and organization;
+within org-mode I can fold the file easily into separate sections, which
+makes it more readable.
+
+Many of the default general and org-mode settings were inspired [[https://github.com/darothen/dotfiles/blob/master/emacs/.emacs][by Daniel
+Rothenberg's emacs configuration.]]  
+
+* General settings
+** Load packages when emacs is idiling, rather than at start-up
+#+BEGIN_SRC emacs-lisp
+    (require 'idle-require)
+    (setq idle-require-delay 5)
+    (idle-require-mode 1)
+#+END_SRC
+** Use better-defaults
+better-defaults adds some settings to improve on the defaults of emacs.  More
+information can be found here: https://github.com/technomancy/better-defaults
+
+#+BEGIN_SRC emacs-lisp
+    (require 'better-defaults)
+#+END_SRC
+
+** Set the default tab width to 4 spaces
+This is standard for Python and looks nice in other contexts too.
+
+#+BEGIN_SRC emacs-lisp
+    (setq default-tab-width 4)
+#+END_SRC
+
+** Show in progress key bindings quickly
+This lets you quickly see what keys you've typed for a keyboard shortcut.  
+By default emacs uses one second; here we change it to 0.1 seconds.  
+See here for more information:
+http://pragmaticemacs.com/emacs/show-unfinished-keystrokes-early/
+
+#+BEGIN_SRC emacs-lisp
+    (setq echo-keystrokes 0.1)
+#+END_SRC
+
+** Don't show the startup screen
+I typically don't have a need for the startup screen, so it makes sense to
+disable it.  See here for more information:
+https://stackoverflow.com/questions/744672/unable-to-hide-welcome-screen-in-emacs
+
+#+BEGIN_SRC emacs-lisp
+   (setq inhibit-startup-screen t)
+#+END_SRC
+
+** If lines are longer than the display width, wrap them
+#+BEGIN_SRC emacs-lisp
+    (setq line-move-visual t)
+#+END_SRC
+
+** Ignore case in all tab-completion contexts
+This makes finding files and commands easier.  See here for more information:
+https://emacs.stackexchange.com/questions/32407/tab-completion-in-minibuffer-case-insensitive
+
+#+BEGIN_SRC emacs-lisp
+    (setq completion-ignore-case t)
+    (setq read-file-name-completion-ignore-case t)
+    (setq read-buffer-completion-ignore-case t)
+#+END_SRC
+
+** Turn off the bell
+The warning bell is not often that important and can just be annoying.
+
+#+BEGIN_SRC emacs-lisp
+    (setq ring-bell-function 'ignore)
+#+END_SRC
+** Automatically limit lines to 79 characters
+This is nice, because it automatically keeps text within the default width of a
+terminal window.  It also enforces PEP8 compliance on this front in Python.
+#+BEGIN_SRC emacs-lisp
+    (setq-default fill-column 79)
+    (setq-default auto-fill-function 'do-auto-fill)
+#+END_SRC
+** Use spaces for tabs
+#+BEGIN_SRC emacs-lisp
+    (setq-default indent-tabs-mode nil)
+#+END_SRC
+** Use UTF-8 encoding for all files
+This allows for the display of special characters directly within emacs.  See
+here for more information:
+https://www.masteringemacs.org/article/working-coding-systems-unicode-emacs
+#+BEGIN_SRC emacs-lisp
+    (prefer-coding-system 'utf-8)
+    (set-default-coding-systems 'utf-8)
+    (set-terminal-coding-system 'utf-8)
+    (set-keyboard-coding-system 'utf-8)
+#+END_SRC
+** Turn on syntax highlighting in all buffers
+#+BEGIN_SRC emacs-lisp
+    (global-font-lock-mode t)
+#+END_SRC
+** Require a newline at the end of all files
+It is often recommmended to do this for all text files.  See here for more
+information:
+https://stackoverflow.com/questions/729692/why-should-text-files-end-with-a-newline
+#+BEGIN_SRC emacs-lisp
+    (setq require-final-newline t)
+#+END_SRC
+** Use which-key to enable searching key bindings
+#+BEGIN_SRC emacs-lisp
+    (require 'which-key)
+    (which-key-mode)
+#+END_SRC
+* Python settings
+** Syntax and style checking
+Turn on Python-related syntax and style checking.
+#+BEGIN_SRC emacs-lisp
+    (add-hook 'python-mode-hook 'anaconda-mode)
+    (add-hook 'python-mode-hook 'flycheck-mode)
+#+END_SRC
+* LaTeX settings
+The majority of these settings were inspired from a great Stack Exchange answer:
+https://tex.stackexchange.com/questions/50827/a-simpletons-guide-to-tex-workflow-with-emacs
+
+** Add syntax checking for LaTeX
+#+BEGIN_SRC emacs-lisp
+    (add-hook 'TeX-mode-hook 'flycheck-mode)
+#+END_SRC
+** Parse TeX files automatically
+See here for more details for why this is recommended: 
+https://www.gnu.org/software/auctex/manual/auctex/Parsing-Files.html
+#+BEGIN_SRC emacs-lisp
+    (setq TeX-parse-self t)
+    (setq TeX-auto-save t)
+#+END_SRC
+** Tell AUCTeX to always query for the master file
+See here for more details:
+https://www.gnu.org/software/auctex/manual/auctex.html#index-TeX_002dmaster-2
+#+BEGIN_SRC emacs-lisp
+    (setq-default TeX-master nil)
+#+END_SRC
+** Always export to PDF
+#+BEGIN_SRC emacs-lisp
+    (setq TeX-PDF-mode t)
+#+END_SRC
+** Highlight misspelled words when writing LaTeX
+#+BEGIN_SRC emacs-lisp
+    (add-hook 'TeX-mode-hook 'flyspell-mode)
+#+END_SRC
+** Enable environment folding
+Fold environments for easier navigation throughout the document
+#+BEGIN_SRC emacs-lisp
+    (add-hook 'TeX-mode-hook (lambda () (TeX-fold-mode 1)))
+#+END_SRC
+** Expand standard quotation marks to csquotes
+See here for more information:
+https://tex.stackexchange.com/questions/39285/whats-the-advantage-of-using-csquotes-over-using-an-editors-auto-replacement-f
+#+BEGIN_SRC emacs-lisp
+    (setq LaTeX-csquotes-close-quote "}"
+          LaTeX-csquotes-open-quote "\\enquote{")
+#+END_SRC
+** Enable LaTeX-math-mode
+This adds shortcuts for typing math symbols; see here for more information:
+https://www.gnu.org/software/auctex/manual/auctex/Mathematics.html
+#+BEGIN_SRC emacs-lisp
+    (add-hook 'TeX-mode-hook 'LaTeX-math-mode)
+#+END_SRC
+** Automatically pair delimiters
+#+BEGIN_SRC emacs-lisp
+    (setq LaTeX-electric-left-right-brace t)
+    (setq TeX-electric-math t)
+#+END_SRC
+* Org-mode settings
+The settings here were heavily borrowed from Daniel Rothenberg's:
+https://github.com/darothen/dotfiles/blob/master/emacs/.emacs.d/darothen.org
+
+** Automatically use org-mode for files with certain extensions
+#+BEGIN_SRC emacs-lisp
+    (require 'org)
+    (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
+#+END_SRC
+** Search an org directory with my home directory for agenda files
+See here for more information:
+https://orgmode.org/manual/Agenda-files.html
+#+BEGIN_SRC emacs-lisp
+    (setq org-agenda-files
+     (append '("~/org/")
+             (file-expand-wildcards "~/org/cals/*.org")))
+#+END_SRC
+** Add some additional keyboard shortcuts
+#+BEGIN_SRC emacs-lisp
+    (bind-key "C-c c" 'org-capture)
+    (bind-key "C-c a" 'org-agenda)
+    (bind-key "C-c l" 'org-store-link)
+    (bind-key "C-c L" 'org-insert-link-global)
+    (bind-key "C-c O" 'org-open-at-point-global)
+    (bind-key "C-c j" 'org-clock-goto)
+    (bind-key "C-c C-w" 'org-refile)
+    (bind-key "<f9> <f9>" 'org-agenda-list)
+    (bind-key "<f9> <f8>" (lambda () (interactive) (org-capture nil "r")))
+#+END_SRC
+** Enable logging and clocking
+#+BEGIN_SRC emacs-lisp
+    (setq org-clock-into-drawer t)
+    (setq org-drawers '("PROPERTIES" "LOGBOOK"))
+    (setq org-clock-out-remove-zero-time-clocks t)
+    (setq org-clock-in-resume t)
+#+END_SRC
+** Add some custom statuses for TODO items
+#+BEGIN_SRC emacs-lisp
+    (setq org-todo-keywords
+      '((sequence "TODO(t)" "NEXT(n)" "INPROGRESS(i)" "|" "DONE(d)")
+        (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "SHELF(s@/!)")))
+    (setq org-todo-keyword-faces
+      '(("TODO" :foreground "blue" :weight bold)
+        ("NEXT" :foreground "orange" :weight bold)
+        ("INPROGRESS" :foreground "lightgreen" :weight bold)
+        ("DONE" :foreground "forestgreen" :weight bold)
+        ("WAITING" :foreground "gold" :weight bold)
+        ("HOLD" :foreground "red" :weight bold)
+        ("SHELF" :foreground "purple" :weight bold)))
+#+END_SRC
+** Enable use of minted for syntax highlighting with LaTeX export
+#+BEGIN_SRC emacs-lisp
+    (setq org-latex-listings 'minted
+          org-latex-packages-alist '(("" "minted"))
+          org-latex-pdf-process
+                '("pdflatex -shell-escape -interaction nonstopmode
+          -output-directory %o %f"
+                  "pdflatex -shell-escape -interaction nonstopmode
+          -output-directory %o %f"))
+#+END_SRC

@@ -1,16 +1,8 @@
-(defconst user-init-dir
-  (cond ((boundp 'user-emacs-directory)
-	 user-emacs-directory)
-	((boundp 'user-init-directory)
-	 user-init-directory)
-	(t "~/.emacs.d/")))
+;; Taken from Harry Schwartz's dotfiles
+(package-initialize)
 
-(defun load-user-file (file)
-  (interactive "f")
-  "Load a file in current user's configuration directory"
-  (load-file (expand-file-name file user-init-dir)))
+(require 'cask "~/.cask/cask.el")
+(cask-initialize)
+(require 'pallet)
 
-(load-user-file "global-configuration.el")
-(load-user-file "latex.el")
-(load-user-file "python.el")
-(load-user-file "org.el")
+(org-babel-load-file "~/.emacs.d/configuration.org")
