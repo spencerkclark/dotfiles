@@ -232,6 +232,16 @@ https://orgmode.org/manual/Agenda-files.html
                   "pdflatex -shell-escape -interaction nonstopmode
           -output-directory %o %f"))
 #+END_SRC
+** Activate and configure org-ref
+This makes citing articles in org documents really easy.
+#+BEGIN_SRC emacs-lisp
+    (require 'org-ref)
+    (setq org-latex-pdf-process
+      '("pdflatex -interaction nonstopmode -output-directory %o %f"
+    "bibtex %b"
+    "pdflatex -interaction nonstopmode -output-directory %o %f"
+    "pdflatex -interaction nonstopmode -output-directory %o %f"))
+#+END_SRC
 * Fortran settings
 ** Enable flycheck in f90-mode
 #+BEGIN_SRC emacs-lisp
