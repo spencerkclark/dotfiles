@@ -113,6 +113,12 @@ https://stackoverflow.com/questions/729692/why-should-text-files-end-with-a-newl
 #+BEGIN_SRC emacs-lisp
     (setq flycheck-highlighting-mode 'lines)
 #+END_SRC
+** Activate swiper
+For nicer searching in files.
+#+BEGIN_SRC emacs-lisp
+    (ivy-mode 1)
+    (global-set-key "\C-s" 'swiper)
+#+END_SRC
 * Python settings
 ** Syntax and style checking
 Turn on Python-related syntax and style checking.
@@ -171,6 +177,52 @@ https://www.gnu.org/software/auctex/manual/auctex/Mathematics.html
 #+BEGIN_SRC emacs-lisp
     (setq LaTeX-electric-left-right-brace t)
     (setq TeX-electric-math t)
+#+END_SRC
+** Add custom LaTeX template for export
+I find the default margins org-mode uses for LaTeX export to be too narrow, and
+also like to use a different font than the default.  Lastly, it is helpful to
+add some LaTeX packages I commonly use to the header so I don't need to import
+them manually.
+#+BEGIN_SRC emacs-lisp
+    (with-eval-after-load 'ox-latex
+        (add-to-list 'org-latex-classes
+            '("informal-writeup"
+              "\\documentclass[12pt]{article}
+               \\usepackage{amsmath}
+               \\usepackage{caption}
+               \\usepackage{cmbright}
+               \\usepackage{commath}
+               \\usepackage{fancyhdr}
+               \\usepackage{float}
+               \\usepackage[T1]{fontenc}
+               \\usepackage{graphicx}
+               \\usepackage{natbib}
+               \\usepackage{siunitx}
+
+               % Extent page margins (the defaults in LaTeX are too narrow for
+               % my liking).
+               \\addtolength{\\oddsidemargin}{-1in}
+               \\addtolength{\\evensidemargin}{-1in}
+               \\addtolength{\\textwidth}{2in}
+               \\addtolength{\\topmargin}{-.875in}
+               \\addtolength{\\textheight}{1.75in}
+
+               % Define math commands for writing vectors in bold, and
+               % material derivatives with a capital D.
+               \\newcommand{\\vect}[1]{\\boldsymbol{\\vec{#1}}}
+               \\newcommand{\\mat}[1]{\frac{\\text{D}#1}{\\text{D}t}}
+
+               % Use fancyhdr package
+               \\pagestyle{fancy}
+               \\lhead{\\today}
+               \\rhead{Spencer Clark}"
+              ("\\section{%s}" . "\\section*{%s}")
+              ("\\subsection{%s}" . "\\subsection*{%s}")
+              ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+              ("\\paragraph{%s}" . "\\paragraph*{%s}")
+            )
+        )
+    )
 #+END_SRC
 * Org-mode settings
 The settings here were heavily borrowed from Daniel Rothenberg's:
