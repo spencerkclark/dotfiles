@@ -277,22 +277,19 @@ https://orgmode.org/manual/Agenda-files.html
 ** Enable use of minted for syntax highlighting with LaTeX export
 #+BEGIN_SRC emacs-lisp
     (setq org-latex-listings 'minted
-          org-latex-packages-alist '(("" "minted"))
-          org-latex-pdf-process
-                '("pdflatex -shell-escape -interaction nonstopmode
-          -output-directory %o %f"
-                  "pdflatex -shell-escape -interaction nonstopmode
-          -output-directory %o %f"))
+          org-latex-packages-alist '(("" "minted"))))
 #+END_SRC
 ** Activate and configure org-ref
-This makes citing articles in org documents really easy.
+This makes citing articles in org documents really easy.  Also adds
+-shell-escape flag to call to pdflatex to enable use of minted in exporting
+lines of code to LaTeX.
 #+BEGIN_SRC emacs-lisp
     (require 'org-ref)
     (setq org-latex-pdf-process
-      '("pdflatex -interaction nonstopmode -output-directory %o %f"
+      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
     "bibtex %b"
-    "pdflatex -interaction nonstopmode -output-directory %o %f"
-    "pdflatex -interaction nonstopmode -output-directory %o %f"))
+    "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+    "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 #+END_SRC
 * Fortran settings
 ** Enable flycheck in f90-mode
