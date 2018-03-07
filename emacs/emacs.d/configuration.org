@@ -277,7 +277,7 @@ https://orgmode.org/manual/Agenda-files.html
 ** Enable use of minted for syntax highlighting with LaTeX export
 #+BEGIN_SRC emacs-lisp
     (setq org-latex-listings 'minted
-          org-latex-packages-alist '(("" "minted"))))
+          org-latex-packages-alist '(("" "minted")))
 #+END_SRC
 ** Activate and configure org-ref
 This makes citing articles in org documents really easy.  Also adds
@@ -295,4 +295,10 @@ lines of code to LaTeX.
 ** Enable flycheck in f90-mode
 #+BEGIN_SRC emacs-lisp
     (add-hook 'f90-mode-hook 'flycheck-mode)
+#+END_SRC
+* Emacs lisp settings
+** Enable flycheck in emacs lisp mode
+Helps catch initialization file errors before they cause problems
+#+BEGIN_SRC emacs-lisp
+    (add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
 #+END_SRC
