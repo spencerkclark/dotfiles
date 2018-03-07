@@ -291,6 +291,16 @@ lines of code to LaTeX.
     "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
     "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 #+END_SRC
+** Enable spell-checking
+#+BEGIN_SRC emacs-lisp
+    (add-hook 'org-mode-hook 'flyspell-mode)
+#+END_SRC
+** Add template for LaTeX equations
+To add a LaTeX equation to a org document just type ~<e~ followed by the tab
+key.
+#+BEGIN_SRC emacs-lisp
+    (add-to-list 'org-structure-template-alist '("e" "\\begin{equation}\n?\n\\end{equation}"))
+#+END_SRC
 * Fortran settings
 ** Enable flycheck in f90-mode
 #+BEGIN_SRC emacs-lisp
