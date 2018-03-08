@@ -224,6 +224,12 @@ them manually.
         )
     )
 #+END_SRC
+`** Add reftex support
+#+BEGIN_SRC emacs-lisp
+  (require 'reftex)
+  (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+  (add-hook 'latex-mode-hook 'turn-on-reftex)
+#+END_SRC
 * Org-mode settings
 The settings here were heavily borrowed from Daniel Rothenberg's:
 https://github.com/darothen/dotfiles/blob/master/emacs/.emacs.d/darothen.org
