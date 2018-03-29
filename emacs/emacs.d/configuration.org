@@ -120,7 +120,7 @@ For nicer searching in files.
     (global-set-key "\C-s" 'swiper)
 #+END_SRC
 ** Disable <ESC><ESC> keybinding
-On certain platforms, after idling for some time and then pressing an arrow
+On certain platforms, idling for some time and then pressing an arrow
 key can lead to unwanted text being added (like "OA" or "OB" depending on which
 arrow key is pressed).  This disables that behavior.  See here for more
 information:
