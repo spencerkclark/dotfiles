@@ -119,6 +119,15 @@ For nicer searching in files.
     (ivy-mode 1)
     (global-set-key "\C-s" 'swiper)
 #+END_SRC
+** Disable <ESC><ESC> keybinding
+On certain platforms, after idling for some time and then pressing an arrow
+key can lead to unwanted text being added (like "OA" or "OB" depending on which
+arrow key is pressed).  This disables that behavior.  See here for more
+information:
+https://stackoverflow.com/questions/26164029/strange-emacs-keybinding-behavior
+#+BEGIN_SRC emacs-lisp
+(define-key esc-map (kbd "<ESC><ESC>") nil)
+#+END_SRC
 * Python settings
 ** Syntax and style checking
 Turn on Python-related syntax and style checking.
