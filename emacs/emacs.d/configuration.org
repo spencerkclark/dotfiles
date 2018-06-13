@@ -180,10 +180,10 @@ https://tex.stackexchange.com/questions/39285/whats-the-advantage-of-using-csquo
 This adds shortcuts for typing math symbols; see here for more information:
 https://www.gnu.org/software/auctex/manual/auctex/Mathematics.html
 #+BEGIN_SRC emacs-lisp
-    ;; (add-hook 'TeX-mode-hook 'LaTeX-math-mode)
+    (add-hook 'TeX-mode-hook 'LaTeX-math-mode)
 #+END_SRC
 ** Automatically pair delimiters
-Here when using ~AUCTeX~ we make sure to take advantage of the ~CDLaTex,
+Here when using ~AUCTeX~ we make sure to take advantage of the ~CDLaTex~ library,
 which provides some helpful tools for automatically pairing delimiters:
 https://github.com/cdominik/cdlatex. 
 #+BEGIN_SRC emacs-lisp
