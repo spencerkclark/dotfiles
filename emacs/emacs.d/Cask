@@ -8,6 +8,7 @@
 (depends-on "auto-complete")
 (depends-on "better-defaults")
 (depends-on "bind-key")
+(depends-on "cdlatex")
 (depends-on "color-theme")
 (depends-on "flycheck")
 (depends-on "idle-require")
