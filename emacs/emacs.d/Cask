@@ -1,6 +1,7 @@
 (source gnu)
 (source marmalade)
 (source melpa)
+(source melpa-stable)
 (source org)
 
 (depends-on "anaconda-mode")
