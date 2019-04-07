@@ -23,6 +23,7 @@
 (depends-on "org")
 (depends-on "org-ref")
 (depends-on "pallet")
+(depends-on "snakemake-mode")
 (depends-on "swiper")
 (depends-on "use-package")
 (depends-on "which-key")
