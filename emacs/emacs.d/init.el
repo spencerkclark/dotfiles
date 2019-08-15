@@ -1,5 +1,5 @@
 ;; Taken from Harry Schwartz's dotfiles
-(package-initialize)
+;; (package-initialize)
 
 (require 'cask "~/.cask/cask.el")
 (cask-initialize)

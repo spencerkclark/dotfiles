@@ -11,12 +11,6 @@ Many of the default general and org-mode settings were inspired [[https://github
 Rothenberg's emacs configuration.]]  
 
 * General settings
-** Load packages when emacs is idiling, rather than at start-up
-#+BEGIN_SRC emacs-lisp
-    (require 'idle-require)
-    (setq idle-require-delay 5)
-    (idle-require-mode 1)
-#+END_SRC
 ** Use better-defaults
 better-defaults adds some settings to improve on the defaults of emacs.  More
 information can be found here: https://github.com/technomancy/better-defaults
@@ -125,112 +119,6 @@ Turn on Python-related syntax and style checking.
 #+BEGIN_SRC emacs-lisp
     (add-hook 'python-mode-hook 'anaconda-mode)
     (add-hook 'python-mode-hook 'flycheck-mode)
-#+END_SRC
-* LaTeX settings
-The majority of these settings were inspired from a great Stack Exchange answer:
-https://tex.stackexchange.com/questions/50827/a-simpletons-guide-to-tex-workflow-with-emacs
-
-** Add syntax checking for LaTeX
-#+BEGIN_SRC emacs-lisp
-    (add-hook 'TeX-mode-hook 'flycheck-mode)
-#+END_SRC
-** Parse TeX files automatically
-See here for more details for why this is recommended: 
-https://www.gnu.org/software/auctex/manual/auctex/Parsing-Files.html
-#+BEGIN_SRC emacs-lisp
-    (setq TeX-parse-self t)
-    (setq TeX-auto-save t)
-#+END_SRC
-** Tell AUCTeX to always query for the master file
-See here for more details:
-https://www.gnu.org/software/auctex/manual/auctex.html#index-TeX_002dmaster-2
-#+BEGIN_SRC emacs-lisp
-    (setq-default TeX-master nil)
-#+END_SRC
-** Always export to PDF
-#+BEGIN_SRC emacs-lisp
-    (setq TeX-PDF-mode t)
-#+END_SRC
-** Highlight misspelled words when writing LaTeX
-#+BEGIN_SRC emacs-lisp
-    (add-hook 'TeX-mode-hook 'flyspell-mode)
-#+END_SRC
-** Enable environment folding
-Fold environments for easier navigation throughout the document
-#+BEGIN_SRC emacs-lisp
-    (add-hook 'TeX-mode-hook (lambda () (TeX-fold-mode 1)))
-#+END_SRC
-** Expand standard quotation marks to csquotes
-See here for more information:
-https://tex.stackexchange.com/questions/39285/whats-the-advantage-of-using-csquotes-over-using-an-editors-auto-replacement-f
-#+BEGIN_SRC emacs-lisp
-    (setq LaTeX-csquotes-close-quote "}"
-          LaTeX-csquotes-open-quote "\\enquote{")
-#+END_SRC
-** Enable LaTeX-math-mode
-This adds shortcuts for typing math symbols; see here for more information:
-https://www.gnu.org/software/auctex/manual/auctex/Mathematics.html
-#+BEGIN_SRC emacs-lisp
-    (add-hook 'TeX-mode-hook 'LaTeX-math-mode)
-#+END_SRC
-** Automatically pair delimiters
-Here when using ~AUCTeX~ we make sure to take advantage of the ~CDLaTex~ library,
-which provides some helpful tools for automatically pairing delimiters:
-https://github.com/cdominik/cdlatex. 
-#+BEGIN_SRC emacs-lisp
-    (add-hook 'LaTeX-mode-hook 'turn-on-cdlatex)
-#+END_SRC
-** Add custom LaTeX template for export
-I find the default margins org-mode uses for LaTeX export to be too narrow, and
-also like to use a different font than the default.  Lastly, it is helpful to
-add some LaTeX packages I commonly use to the header so I don't need to import
-them manually.
-#+BEGIN_SRC emacs-lisp
-    (with-eval-after-load 'ox-latex
-        (add-to-list 'org-latex-classes
-            '("informal-writeup"
-              "\\documentclass[12pt]{article}
-               \\usepackage{amsmath}
-               \\usepackage{caption}
-               \\usepackage{cmbright}
-               \\usepackage{commath}
-               \\usepackage{fancyhdr}
-               \\usepackage{float}
-               \\usepackage[T1]{fontenc}
-               \\usepackage{graphicx}
-               \\usepackage{natbib}
-               \\usepackage{siunitx}
-
-               % Extent page margins (the defaults in LaTeX are too narrow for
-               % my liking).
-               \\addtolength{\\oddsidemargin}{-1in}
-               \\addtolength{\\evensidemargin}{-1in}
-               \\addtolength{\\textwidth}{2in}
-               \\addtolength{\\topmargin}{-.875in}
-               \\addtolength{\\textheight}{1.75in}
-
-               % Define math commands for writing vectors in bold, and
-               % material derivatives with a capital D.
-               \\newcommand{\\vect}[1]{\\boldsymbol{\\vec{#1}}}
-               \\newcommand{\\mat}[1]{\frac{\\text{D}#1}{\\text{D}t}}
-
-               % Use fancyhdr package
-               \\pagestyle{fancy}
-               \\lhead{\\today}
-               \\rhead{Spencer Clark}"
-              ("\\section{%s}" . "\\section*{%s}")
-              ("\\subsection{%s}" . "\\subsection*{%s}")
-              ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-              ("\\paragraph{%s}" . "\\paragraph*{%s}")
-            )
-        )
-    )
-#+END_SRC
-`** Add reftex support
-#+BEGIN_SRC emacs-lisp
-  (require 'reftex)
-  (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-  (add-hook 'latex-mode-hook 'turn-on-reftex)
 #+END_SRC
 * Org-mode settings
 The settings here were heavily borrowed from Daniel Rothenberg's:
