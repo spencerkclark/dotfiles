@@ -1,4 +1,10 @@
 ;; Taken from Harry Schwartz's dotfiles
+
+;; A couple lines to accelerate startup; see
+;; https://github.com/MatthewZMD/.emacs.d for more details.
+(setq gc-cons-threshold 67108864)
+(setq package-enable-at-startup nil)
+
 (package-initialize)
 
 (require 'cask "~/.cask/cask.el")
