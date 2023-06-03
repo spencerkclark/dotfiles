@@ -10,11 +10,7 @@ install-git:
 	ln -s `pwd`/git/gitconfig ~/.gitconfig
 
 install-emacs:
-	rm -rf ~/.cask
 	rm -rf ~/.emacs.d
-	curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 	mkdir -p ~/.emacs.d
 	cp `pwd`/emacs/emacs.d/*.el ~/.emacs.d
-	cp `pwd`/emacs/emacs.d/Cask ~/.emacs.d
 	cp `pwd`/emacs/emacs.d/configuration.org ~/.emacs.d
-	~/.cask/bin/cask --path ~/.emacs.d/ install

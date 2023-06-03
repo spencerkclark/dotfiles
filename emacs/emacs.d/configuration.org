@@ -7,22 +7,30 @@ by Harry Schwartz.]]  This allows for easy documentation and organization;
 within org-mode I can fold the file easily into separate sections, which
 makes it more readable.
 
-Many of the default general and org-mode settings were inspired [[https://github.com/darothen/dotfiles/blob/master/emacs/.emacs][by Daniel
+Many of the default general settings were inspired [[https://github.com/darothen/dotfiles/blob/master/emacs/.emacs][by Daniel
 Rothenberg's emacs configuration.]]  
 
 * General settings
 ** Load packages when emacs is idiling, rather than at start-up
 #+BEGIN_SRC emacs-lisp
-    (require 'idle-require)
-    (setq idle-require-delay 5)
-    (idle-require-mode 1)
+    (use-package idle-require
+        :ensure t
+
+        :init
+        (setq idle-require-delay 5)
+
+        :config
+        (idle-require-mode 1)
+    )
 #+END_SRC
 ** Use better-defaults
 better-defaults adds some settings to improve on the defaults of emacs.  More
 information can be found here: https://github.com/technomancy/better-defaults
 
 #+BEGIN_SRC emacs-lisp
-    (require 'better-defaults)
+    (use-package better-defaults
+        :ensure t
+    )
 #+END_SRC
 
 ** Set the default tab width to 4 spaces
@@ -106,8 +114,12 @@ https://stackoverflow.com/questions/729692/why-should-text-files-end-with-a-newl
 #+END_SRC
 ** Use which-key to enable searching key bindings
 #+BEGIN_SRC emacs-lisp
-    (require 'which-key)
-    (which-key-mode)
+    (use-package which-key
+        :ensure t
+
+        :config
+        (which-key-mode)
+    )
 #+END_SRC
 ** Make flycheck errors more visible
 #+BEGIN_SRC emacs-lisp
@@ -116,13 +128,25 @@ https://stackoverflow.com/questions/729692/why-should-text-files-end-with-a-newl
 ** Activate swiper
 For nicer searching in files.
 #+BEGIN_SRC emacs-lisp
-    (ivy-mode 1)
-    (global-set-key "\C-s" 'swiper)
+     (use-package swiper
+         :ensure t
+     )
+
+     (use-package ivy
+        :ensure t
+
+        :config
+        (ivy-mode 1)
+        (global-set-key "\C-s" 'swiper)
+    )
 #+END_SRC
 * Python settings
 ** Syntax and style checking
 Turn on Python-related syntax and style checking.
 #+BEGIN_SRC emacs-lisp
+    (use-package flycheck
+        :ensure t
+        :init (global-flycheck-mode))
     (add-hook 'python-mode-hook 'anaconda-mode)
     (add-hook 'python-mode-hook 'flycheck-mode)
 #+END_SRC
@@ -179,135 +203,6 @@ which provides some helpful tools for automatically pairing delimiters:
 https://github.com/cdominik/cdlatex. 
 #+BEGIN_SRC emacs-lisp
     (add-hook 'LaTeX-mode-hook 'turn-on-cdlatex)
-#+END_SRC
-** Add custom LaTeX template for export
-I find the default margins org-mode uses for LaTeX export to be too narrow, and
-also like to use a different font than the default.  Lastly, it is helpful to
-add some LaTeX packages I commonly use to the header so I don't need to import
-them manually.
-#+BEGIN_SRC emacs-lisp
-    (with-eval-after-load 'ox-latex
-        (add-to-list 'org-latex-classes
-            '("informal-writeup"
-              "\\documentclass[12pt]{article}
-               \\usepackage{amsmath}
-               \\usepackage{caption}
-               \\usepackage{cmbright}
-               \\usepackage{commath}
-               \\usepackage{fancyhdr}
-               \\usepackage{float}
-               \\usepackage[T1]{fontenc}
-               \\usepackage{graphicx}
-               \\usepackage{natbib}
-               \\usepackage{siunitx}
-
-               % Extent page margins (the defaults in LaTeX are too narrow for
-               % my liking).
-               \\addtolength{\\oddsidemargin}{-1in}
-               \\addtolength{\\evensidemargin}{-1in}
-               \\addtolength{\\textwidth}{2in}
-               \\addtolength{\\topmargin}{-.875in}
-               \\addtolength{\\textheight}{1.75in}
-
-               % Define math commands for writing vectors in bold, and
-               % material derivatives with a capital D.
-               \\newcommand{\\vect}[1]{\\boldsymbol{\\vec{#1}}}
-               \\newcommand{\\mat}[1]{\frac{\\text{D}#1}{\\text{D}t}}
-
-               % Use fancyhdr package
-               \\pagestyle{fancy}
-               \\lhead{\\today}
-               \\rhead{Spencer Clark}"
-              ("\\section{%s}" . "\\section*{%s}")
-              ("\\subsection{%s}" . "\\subsection*{%s}")
-              ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-              ("\\paragraph{%s}" . "\\paragraph*{%s}")
-            )
-        )
-    )
-#+END_SRC
-`** Add reftex support
-#+BEGIN_SRC emacs-lisp
-  (require 'reftex)
-  (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-  (add-hook 'latex-mode-hook 'turn-on-reftex)
-#+END_SRC
-* Org-mode settings
-The settings here were heavily borrowed from Daniel Rothenberg's:
-https://github.com/darothen/dotfiles/blob/master/emacs/.emacs.d/darothen.org
-
-** Automatically use org-mode for files with certain extensions
-#+BEGIN_SRC emacs-lisp
-    (require 'org)
-    (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
-#+END_SRC
-** Search an org directory with my home directory for agenda files
-See here for more information:
-https://orgmode.org/manual/Agenda-files.html
-#+BEGIN_SRC emacs-lisp
-    (setq org-agenda-files
-     (append '("~/org/")
-             (file-expand-wildcards "~/org/cals/*.org")))
-#+END_SRC
-** Add some additional keyboard shortcuts
-#+BEGIN_SRC emacs-lisp
-    (bind-key "C-c c" 'org-capture)
-    (bind-key "C-c a" 'org-agenda)
-    (bind-key "C-c l" 'org-store-link)
-    (bind-key "C-c L" 'org-insert-link-global)
-    (bind-key "C-c O" 'org-open-at-point-global)
-    (bind-key "C-c j" 'org-clock-goto)
-    (bind-key "C-c C-w" 'org-refile)
-    (bind-key "<f9> <f9>" 'org-agenda-list)
-    (bind-key "<f9> <f8>" (lambda () (interactive) (org-capture nil "r")))
-#+END_SRC
-** Enable logging and clocking
-#+BEGIN_SRC emacs-lisp
-    (setq org-clock-into-drawer t)
-    (setq org-drawers '("PROPERTIES" "LOGBOOK"))
-    (setq org-clock-out-remove-zero-time-clocks t)
-    (setq org-clock-in-resume t)
-#+END_SRC
-** Add some custom statuses for TODO items
-#+BEGIN_SRC emacs-lisp
-    (setq org-todo-keywords
-      '((sequence "TODO(t)" "NEXT(n)" "INPROGRESS(i)" "|" "DONE(d)")
-        (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "SHELF(s@/!)")))
-    (setq org-todo-keyword-faces
-      '(("TODO" :foreground "blue" :weight bold)
-        ("NEXT" :foreground "orange" :weight bold)
-        ("INPROGRESS" :foreground "lightgreen" :weight bold)
-        ("DONE" :foreground "forestgreen" :weight bold)
-        ("WAITING" :foreground "gold" :weight bold)
-        ("HOLD" :foreground "red" :weight bold)
-        ("SHELF" :foreground "purple" :weight bold)))
-#+END_SRC
-** Enable use of minted for syntax highlighting with LaTeX export
-#+BEGIN_SRC emacs-lisp
-    (setq org-latex-listings 'minted
-          org-latex-packages-alist '(("" "minted")))
-#+END_SRC
-** Activate and configure org-ref
-This makes citing articles in org documents really easy.  Also adds
--shell-escape flag to call to pdflatex to enable use of minted in exporting
-lines of code to LaTeX.
-#+BEGIN_SRC emacs-lisp
-    (require 'org-ref)
-    (setq org-latex-pdf-process
-      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-    "bibtex %b"
-    "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-    "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-#+END_SRC
-** Enable spell-checking
-#+BEGIN_SRC emacs-lisp
-    (add-hook 'org-mode-hook 'flyspell-mode)
-#+END_SRC
-** Add template for LaTeX equations
-To add a LaTeX equation to a org document just type ~<e~ followed by the tab
-key.
-#+BEGIN_SRC emacs-lisp
-    (add-to-list 'org-structure-template-alist '("e" "\\begin{equation}\n?\n\\end{equation}"))
 #+END_SRC
 * Fortran settings
 ** Enable flycheck in f90-mode
